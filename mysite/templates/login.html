@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <title>This is Login Page</title>
+    </head>
+        <style>
+            body {
+               background-color: lightyellow;
+            }
+            em {
+                color: LightSeaGreen;
+            }
+        </style>
+   
+    <body>
+        <h1>Login</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            <label for="username">用戶名稱:</label>
+            <input type="text" name="username" value="" id="username"> <br />
+            <label for="password">用戶密碼:</label>
+            <input type="password" name="password" value="" id="password"> <br />
+            <button type="button" class = "btn btn-primary w-100" id="login">登入</button>
+            <button type="button" class = "btn btn-primary w-100" id="register">尚未註冊</button>
+        </form>
+    </body>
+</html>
+
+<script>
+    $("#login").click(function(e){
+        if( $("#username").val().length >0 && $("#password").val().length >0){
+            var login ={
+                username : $("#username").val(),
+                password : $("#password").val()
+            };
+
+            $.post('/login', login, function(rtn){
+                if(rtn.status){
+                    window.location= "/profile";
+                }
+                else{
+                    alert("帳號密碼錯誤")
+                }   
+            });
+        } else {
+            alert("請完整填寫資料");
+        }
+    });
+
+    $("#register").click(function(e){
+        window.location= "/register";
+    });
+
+</script>
